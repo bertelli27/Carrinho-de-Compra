@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Carrinho de Compras',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-      )
+      ),
       home: CarrinhoPage(),
       debugShowCheckedModeBanner: false,
     );
@@ -62,7 +62,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
               child: GridView.builder(
                 padding: EdgeInsets.all(10),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // duas colunas
+                  crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                   childAspectRatio: 0.75,
@@ -82,7 +82,16 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                         Text(produto.nome,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16)),
-                        Image.network(produto.imagemUrl, height: 80),
+                        Container(
+                          height: 80,
+                          child: Image.network(
+                            produto.imagemUrl,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Icon(Icons.error, color: Colors.red);
+                            },
+                          ),
+                        ),
                         Text('R\$ ${produto.preco.toStringAsFixed(2)}'),
                         ElevatedButton(
                           onPressed: () {
